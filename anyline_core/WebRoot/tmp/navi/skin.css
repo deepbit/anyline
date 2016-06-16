@@ -8,6 +8,7 @@
 .navi-first-button,.navi-prev-button,.navi-next-button,.navi-last-button,.navi-go-button{
 	display:inline-block;margin-right:5px;font-size:12px;color:#666666;line-height:28px;width:72px;border:1px solid #c0c0c0;outline:none;cursor:pointer;border-radius:4px;background-color:white;
 }
+.navi-go-button{margin-left:10px}
 .navi-first-button:hover,.navi-prev-button:hover,.navi-next-button:hover,.navi-last-button:hover,.navi-go-button:hover{
 	background-color:#1e90ff;color:white;border:1px solid #1e90ff
 }
