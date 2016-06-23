@@ -126,6 +126,11 @@ function _pf_navi(init){
 		if(data){
 			if(typeof(data) == 'string' && !template_body){
 				container.append(data);
+				if(data){
+					_fpSetRequestNotice(conf,'<span class="load_more" onclick="_pf_navi(false);">===显示更多===</span>');
+				}else{
+					_fpSetRequestNotice(conf,'===没有更多内容了===');
+				}
 			}else if(typeof(data.length) == 'undefined'){
 				container.append(_pfReplaceVar(template_body, data, parser));
 			}else if(data.length >= 1){
