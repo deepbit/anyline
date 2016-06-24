@@ -1,6 +1,5 @@
 //标签直接调用
 function _navi_init(){
-	console.log('init');
 	_navi_go(1,_anyline_navi_conf);
 }
 //分页标签onclick
@@ -8,16 +7,15 @@ function _navi_go(n,conf) {
 	if(!conf){
 		conf = _anyline_navi_conf;
 	}
-	console.log(conf);
 	if (!n) {
 		n = document.getElementById('_anyline_go').value;
 	}
 
-	var frm = document.forms["_navi_frm"];
 	if(conf){
 		_navi_go_ajax(n,conf);
 		return;
 	}
+	var frm = document.forms["_navi_frm"];
 	if (frm) {
 		if(frm._anyline_page.value == n){
 			return;
@@ -53,7 +51,6 @@ function _navi_go_ajax(n, conf){
 		naviContainer 	= conf['naviContainer'];
 		empty 			= conf['empty'];
 	}
-	console.log('go_ajax2');
 	data = {};
 	if(typeof param === 'function' ){
 		data = param();
@@ -70,7 +67,11 @@ function _navi_go_ajax(n, conf){
 					$('#'+container).html(data['BODY']);
 				}
 				if(naviContainer){
-					$('#'+naviContainer).html(data['NAVI']);
+					if(empty && data['TOTAL_ROW'] == 0){
+						$('#'+naviContainer).html(empty);
+					}else{
+						$('#'+naviContainer).html(data['NAVI']);
+					}
 				}
 				if(callback){
 					callback(result,data,msg);
