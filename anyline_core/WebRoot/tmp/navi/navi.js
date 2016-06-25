@@ -4,7 +4,7 @@ function _navi_init(){
 }
 //分页标签onclick
 function _navi_go(n,conf) {
-	if(!conf){
+	if(!conf && "undefined" != typeof _anyline_navi_conf){
 		conf = _anyline_navi_conf;
 	}
 	if (!n) {
