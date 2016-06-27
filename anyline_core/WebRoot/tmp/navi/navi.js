@@ -35,46 +35,50 @@ function _navi_go_ajax(n, conf){
 	if (!n) {
 		n = 1;
 	}
-	var data_url		= null;	//数据来源
-	var param 			= null;	//参数收集函数
-	var callback 		= null;	//回调
-	var container 		= null;	//内容显示容器
-	var bodyContainer 	= null;	//
-	var naviContainer 	= null;	//
-	var empty 			= null; //空内容显示
+	var _navi_url				= null;	//数据来源
+	var _navi_param 			= null;	//参数收集函数
+	var _navi_callback 			= null;	//回调
+	var _navi_container 		= null;	//内容显示容器
+	var _navi_bodyContainer 	= null;	//
+	var _navi_pageContainer 	= null;	//
+	var _navi_empty 			= null; //空内容显示
 	if(conf){
-		data_url		= conf['url'];
-		param 			= conf['param'];
-		callback 		= conf['callback'];
-		container 		= conf['container'];
-		bodyContainer	= conf['bodyContainer'];
-		naviContainer 	= conf['naviContainer'];
-		empty 			= conf['empty'];
+		_navi_url				= conf['url'];
+		_navi_param 			= conf['param'];
+		_navi_callback 			= conf['callback'];
+		_navi_container 		= conf['container'];
+		_navi_bodyContainer		= conf['bodyContainer'];
+		_navi_pageContainer 	= conf['naviContainer'];
+		_navi_empty 			= conf['empty'];
 	}
-	data = {};
-	if(typeof param === 'function' ){
-		data = param();
+	var _navi_data = {};
+	if(typeof _navi_param === 'function' ){
+		_navi_data = _navi_param();
 	}else{
-		data = $("#_navi_frm").serialize();
+		_navi_data = $("#_navi_frm").serialize();
 	}
-	data['_anyline_page'] = n;
+	_navi_data['_anyline_page'] = n;
 	al.ajax({
-		url:data_url,
-		data:data,
+		url:_navi_url,
+		data:_navi_data,
 		callback:function(result,data,msg){
 			if(result){
-				if(container){
-					$('#'+container).html(data['BODY']);
+				var _body = unescape(data['BODY']);
+				var _navi = unescape(data['NAVI']);
+				if(_navi_container){
+					$('#'+_navi_container).html(_body);
+				}else if(_navi_bodyContainer){
+					$('#'+_navi_bodyContainer).html(_body);
 				}
-				if(naviContainer){
-					if(empty && data['TOTAL_ROW'] == 0){
-						$('#'+naviContainer).html(empty);
+				if(_navi_pageContainer){
+					if(_navi_empty && data['TOTAL_ROW'] == 0){
+						$('#'+_navi_pageContainer).html(_navi_empty);
 					}else{
-						$('#'+naviContainer).html(data['NAVI']);
+						$('#'+_navi_pageContainer).html(_navi);
 					}
 				}
-				if(callback){
-					callback(result,data,msg);
+				if(_navi_callback){
+					_navi_callback(result,data,msg);
 				}
 			}else{
 				console.log(msg);
@@ -82,43 +86,3 @@ function _navi_go_ajax(n, conf){
 		}
 	});
 }
-/*
-onload调用
-下标调用
-条件切换调用
-============
-
-function changePage(n){
-	if(!n){
-		n = $('#_anyline_page').val();
-}
-if(!n){
-	n = 1;
-}
-var cons = '-1';
-$('.investNav .current').each(function(){
-	var val = $(this).attr('data-value');
-	if(val >0){
-		cons += ','+ val;
-	}
-});
-al.ajax({
-	url:'/web/hm/bor/l.do',
-	data:{_anyline_page:n, cons:cons},
-	callback:function(result,data,msg){
-		var to = new Date();
-		if(result){
-			$('.caseList').html(data['HTML']);
-			$('.caseNavi').html(data['NAVI']);
-			if($('.caseList .caseDetail').length<1){
-				$('.caseNavi').hide();
-			}else{
-				$('.caseNavi').show();
-				}
-				init();
-			}else{
-			}
-		}
-	});
-}
-*/
