@@ -1,0 +1,133 @@
+.caseNavi {
+	color: #999
+}
+
+.anyline_navi {
+	display: inline-block;
+	margin: 0 auto;
+}
+
+.anyline_navi span,.anyline_navi div {
+	display: inline-block;
+}
+
+.navi-summary {
+	display: none;
+	margin-right: 8px;
+	color: #999
+}
+
+.navi-num-item {
+	margin-right: 5px;
+	font-size: 12px;
+	color: #666666;
+	line-height: 28px;
+	width: 30px;
+	border: 1px solid #c0c0c0;
+	border-radius: 4px;
+	background-color: white;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+}
+
+.navi-num-item:hover,.navi-num-cur {
+	background-color: #1e90ff;
+	color: white;
+	border: 1px solid #1e90ff
+}
+
+.navi-first-button,.navi-prev-button,.navi-next-button,.navi-last-button,.navi-go-button
+	{
+	display: inline-block;
+	margin-right: 5px;
+	font-size: 12px;
+	color: #666666;
+	line-height: 28px;
+	width: 72px;
+	border: 1px solid #c0c0c0;
+	outline: none;
+	cursor: pointer;
+	border-radius: 4px;
+	background-color: white;
+	text-align:center;
+}
+
+.navi-go-button {
+	margin-left: 10px
+}
+
+.navi-first-button:hover,.navi-prev-button:hover,.navi-next-button:hover,.navi-last-button:hover,.navi-go-button:hover
+	{
+	background-color: #1e90ff;
+	color: white;
+	border: 1px solid #1e90ff
+}
+
+.navi-go-txt {
+	width: 30px;
+	height: 28px;
+	border: 1px solid #c0c0c0;
+	text-align: center;
+	border-radius: 4px;
+	margin: 0 4px;
+}
+
+.navi-num-border {
+	display: inline-block;
+}
+
+.J-navijs-go-button {
+	margin-right: 5px;
+	font-size: 12px;
+	color: #666666;
+	line-height: 28px;
+	width: 28px;
+	border: 1px solid #c0c0c0;
+}
+
+.anyline_navi .navi-disabled {
+	opacity: 0.9;
+	border: 1px solid #c0c0c0;
+	background-color: buttonface
+}
+
+.anyline_navi .navi-num-item-cur {
+	background-color: #1e90ff;
+	border: 1px solid #1e90ff;
+	color: white
+}
+
+.anyline_navi .navi-disabled:hover {
+	background-color: buttonface;
+	color: #666666;
+	border: 1px solid #c0c0c0;
+	outline: none;
+}
+
+.anyline_navi .navi-num-item-cur:hover {
+	background-color: #1e90ff;
+	border: 1px solid #1e90ff;
+	color: white
+}
+
+.navijs-nav {
+	display: inline-block;
+}
+
+.J-navijs-go-pagenumber {
+	display: inline-block;
+	width: 20px;
+}
+
+#_anyline_go,.navijs-go-input {
+	text-indent:0px;
+	display: inline-block;
+	width: 30px;
+	text-align:center;
+	padding:0px;
+}
+
+.navijs-go-button {
+	display: inline-block;
+}
