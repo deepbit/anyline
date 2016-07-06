@@ -15,7 +15,7 @@ al.xhr = null;					//xhr
 al.dataType = 'json';			//返回的数据类型
 al.json = null;					//返回的数据
 
-function init(config){
+al.init = function(config){
 	if(typeof config['async'] == "undefined") {config['async'] = true;}
 	if(!config['success']){config['success']=function(data){};}
 	if(!config['callback']){config['callback']=function(result,data,msg){};}
@@ -24,7 +24,7 @@ function init(config){
 }
 al.submit = function(frm,config){
 	if(!frm){return;}
-	config = config.init(config);
+	config = al.init(config);
 	$(frm).ajaxSubmit({
 		type:'post',
 		dataType: 'json',
@@ -43,7 +43,7 @@ al.submit = function(frm,config){
 	
 };
 al.ajax = function(config){
-	config = init(config);
+	config = al.init(config);
 	$.ajax({
 	   async: config.async,
 	   type: 'post',
@@ -60,6 +60,32 @@ al.ajax = function(config){
 	});
 };
 
+/**
+ * 加载服务器端文件
+ * path必须以密文提交 <al:des>/WEB-INF/template/a.jsp</al:des>
+ * 以WEB-INF为相对目录根目录
+ * al.template('/WEB-INF/template/a.jsp',function(result,data,msg){alert(data)});
+ * al.template({path:'template/a.jsp', id:'1'},function(result,data,msg){});
+ * 模板文件中以${param.id}的形式接收参数
+ * 
+ * 对于复杂模板(如解析前需要查询数据)需要自行实现解析方法js中 通过{parser:'/al/tmp/load1.do'}形式指定
+ */
+al.template = function(config, fn){
+	if(typeof config == 'string'){
+		config = {path:config};
+	}
+	var parser_url = '/al/tmp/load.do';
+	if(config['parser']){
+		parser_url = config[parser];
+	}
+	al.ajax({
+		url:parser_url,
+		data:config,
+		callback:function(result,data,msg){
+			fn(result,data,msg);
+		}
+	});
+}
 function _ajax_success(config){
 	var result = config.json['result'];
 	var message = config.json['message'];
