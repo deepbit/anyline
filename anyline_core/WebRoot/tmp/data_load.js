@@ -10,8 +10,8 @@ var _is_request = false;
 		
 	*/
 	function _pfLoad(conf){
-		var template_url = '/vpt/cm/load_data_template.html'; 
-		var template_key = conf.template || data_template_key;
+		var template_url = '/al/tmp/load_style.do'; 
+		var template_key = conf.template || style_template_key;
 		if(!template_url || !template_key || !conf.url){
 			return;
 		}
@@ -20,10 +20,10 @@ var _is_request = false;
 			//加载样式模板
 			al.ajax({
 				url:template_url,
-				data:{template:template_key},
+				data:{path:template_key},
 				callback:function(result,data,msg){
 					if(result){
-						templates[template_key] = data;
+						templates[template_key] = unescape(data);
 						_pfLoadData(conf);
 					}else{
 					}
@@ -44,7 +44,7 @@ var _is_request = false;
 		_is_request = true;
 		
 		var data_url = conf.url;
-		var template_key = conf.template || data_template_key;
+		var template_key = conf.template || style_template_key;
 		var template_body = templates[template_key];
 		var data = conf.data;
 		if(!data){
