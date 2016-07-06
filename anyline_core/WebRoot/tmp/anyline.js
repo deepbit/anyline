@@ -59,7 +59,6 @@ al.ajax = function(config){
 	   }
 	});
 };
-
 /**
  * 加载服务器端文件
  * path必须以密文提交 <al:des>/WEB-INF/template/a.jsp</al:des>
@@ -82,6 +81,7 @@ al.template = function(config, fn){
 		url:parser_url,
 		data:config,
 		callback:function(result,data,msg){
+			data = unescape(data);
 			fn(result,data,msg);
 		}
 	});
@@ -138,6 +138,7 @@ function _ajax_success(config){
 		callback(result,data,message);
 	}
 };
+
 function _ajax_error(XMLHttpRequest, textStatus, errorThrown){
 	//config.lock();
 //	if(typeof(art) != "undefined"){
