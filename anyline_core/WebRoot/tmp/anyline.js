@@ -69,6 +69,7 @@ al.ajax = function(config){
  * 
  * 对于复杂模板(如解析前需要查询数据)需要自行实现解析方法js中 通过{parser:'/al/tmp/load1.do'}形式指定
  */
+var _anyline_template_file= {};
 al.template = function(config, fn){
 	if(typeof config == 'string'){
 		config = {path:config};
@@ -77,11 +78,18 @@ al.template = function(config, fn){
 	if(config['parser']){
 		parser_url = config[parser];
 	}
+	
+	var key = parser_url + "_" + config['path'];
+	if(_anyline_template_file[key]){
+		fn(true,_anyline_template_file[key],'');
+		return;
+	}
 	al.ajax({
 		url:parser_url,
 		data:config,
 		callback:function(result,data,msg){
 			data = unescape(data);
+			_anyline_template_file[key] = data;
 			fn(result,data,msg);
 		}
 	});
