@@ -68,11 +68,11 @@ function _navi_go_ajax(n, conf){
 				if(_navi_before && typeof _navi_before == 'function'){
 					_navi_before();
 				}
-				
+				console.log(data);
 
 				if(_navi_callback && typeof _navi_callback == 'function'){
 					_navi_callback(result,data,msg);
-				}else{
+				}
 					if(_navi_container){
 						$('#'+_navi_container).html(_body);
 					}else if(_navi_bodyContainer){
@@ -85,7 +85,6 @@ function _navi_go_ajax(n, conf){
 							$('#'+_navi_pageContainer).html(_navi);
 						}
 					}
-				}
 
 				if(_navi_after && typeof _navi_after == 'function'){
 					_navi_after();
