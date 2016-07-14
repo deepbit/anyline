@@ -44,11 +44,15 @@ al.submit = function(frm,config){
 };
 al.ajax = function(config){
 	config = al.init(config);
+	var data = config.data;
+	if(data && typeof data == 'function'){
+		data = data();
+	}
 	$.ajax({
 	   async: config.async,
 	   type: 'post',
 	   url: config.url,
-	   data: config.data,
+	   data: data,
 	   dataType: 'json',
 	   success: function(json){
 	   		config.json = json;
@@ -152,6 +156,6 @@ function _ajax_error(XMLHttpRequest, textStatus, errorThrown){
 //	if(typeof(art) != "undefined"){
 //		art.dialog({content:XMLHttpRequest.responseText});
 //	}else{
-//		alert("状态:"+textStatus+"\n消息:"+XMLHttpRequest.responseText);
+		console.log("状态:"+textStatus+"\n消息:"+XMLHttpRequest.responseText);
 //	}
 };
