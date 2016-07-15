@@ -50,7 +50,7 @@ function _navi_go_ajax(n, conf){
 		
 	}
 	var _navi_data = {};
-	if(typeof _navi_param === 'function' ){
+	if(typeof _navi_param == 'function' ){
 		_navi_data = _navi_param();
 	}else{
 		//_navi_data = $("#_navi_frm").serialize();

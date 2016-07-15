@@ -45,7 +45,8 @@ al.submit = function(frm,config){
 al.ajax = function(config){
 	config = al.init(config);
 	var data = config.data;
-	if(data && typeof data == 'function'){
+	
+	if(typeof data == 'function'){
 		data = data();
 	}
 	$.ajax({
@@ -130,7 +131,7 @@ function _ajax_success(config){
 	if(result){
 		//函数回调
 		var success = config.success;
-		if(success){
+		if(typeof success == 'function'){
 			success(data,message);
 		}
 	}else{
@@ -146,7 +147,7 @@ function _ajax_success(config){
 	}
 	
 	var callback = config.callback;
-	if(callback){
+	if(typeof callback == 'function'){
 		callback(result,data,message);
 	}
 };
