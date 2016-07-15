@@ -72,7 +72,10 @@ al.ajax = function(config){
  * al.template({path:'template/a.jsp', id:'1'},function(result,data,msg){});
  * 模板文件中以${param.id}的形式接收参数
  * 
- * 对于复杂模板(如解析前需要查询数据)需要自行实现解析方法js中 通过{parser:'/al/tmp/load1.do'}形式指定
+ * 对于复杂模板(如解析前需要查询数据)需要自行实现解析方法js中 通过指定解析器{parser:'/al/tmp/load1.do'}形式实现
+ *controller中通过 WebUtil.parseJsp(request, response, file)解析JSP
+ *注意 parsejsp后需要对html编码(以避免双引号等字符在json中被转码) js接收到数据后解码
+ *escape unescape
  */
 var _anyline_template_file= {};
 al.template = function(config, fn){
@@ -83,9 +86,12 @@ al.template = function(config, fn){
 	if(config['parser']){
 		parser_url = config[parser];
 	}
-	
+	var cache = true;
+	if(config['cache'] == false){
+		cache = false;
+	}
 	var key = parser_url + "_" + config['path'];
-	if(_anyline_template_file[key]){
+	if(cache && _anyline_template_file[key]){
 		fn(true,_anyline_template_file[key],'');
 		return;
 	}
