@@ -84,7 +84,7 @@ al.template = function(config, fn){
 	}
 	var parser_url = '/al/tmp/load.do';
 	if(config['parser']){
-		parser_url = config[parser];
+		parser_url = config['parser'];
 	}
 	var cache = true;
 	if(config['cache'] == false){
