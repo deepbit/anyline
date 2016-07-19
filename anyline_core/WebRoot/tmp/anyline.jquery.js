@@ -3,6 +3,7 @@ al.url = null;					//请求的URL
 al.value = 'CD';				//键值对时 KEY
 al.label = 'NM';				//键值对时 VALUE
 al.async = true;				//是否异步请求
+al.cache = false;				//是否缓存数据(result=true时缓存data)
 al.data = null;					//请求参数
 al.user = null;					//用户名
 al.password = null;				//密码
@@ -14,7 +15,7 @@ al.form = null;					//提交的form
 al.xhr = null;					//xhr
 al.dataType = 'json';			//返回的数据类型
 al.json = null;					//返回的数据
-
+var _anyline_ajax_cache_data = {};
 al.init = function(config){
 	if(typeof config['async'] == "undefined") {config['async'] = true;}
 	if(!config['success']){config['success']=function(data){};}
@@ -44,16 +45,33 @@ al.submit = function(frm,config){
 };
 al.ajax = function(config){
 	config = al.init(config);
-	var data = config.data;
+	var _data = config.data;
 	
-	if(typeof data == 'function'){
-		data = data();
+	if(typeof _data == 'function'){
+		_data = _data();
 	}
+	config.data = _data;
+	if(config['cache']){
+		var _request_key = _fn_pack_rquest_key(config.url, _data);
+		var cache_data = _anyline_ajax_cache_data[_request_key];
+		if(cache_data){
+			var success = config.success;
+			if(typeof success == 'function'){
+				success(cache_data,'');
+			}
+			var callback = config.callback;
+			if(typeof callback == 'function'){
+				callback(true,cache_data,'');
+			}
+			return;
+		}
+	}
+	
 	$.ajax({
 	   async: config.async,
 	   type: 'post',
 	   url: config.url,
-	   data: data,
+	   data: _data,
 	   dataType: 'json',
 	   success: function(json){
 	   		config.json = json;
@@ -90,17 +108,12 @@ al.template = function(config, fn){
 	if(config['cache'] == false){
 		cache = false;
 	}
-	var key = parser_url + "_" + config['path'];
-	if(cache && _anyline_template_file[key]){
-		fn(true,_anyline_template_file[key],'');
-		return;
-	}
 	al.ajax({
 		url:parser_url,
 		data:config,
+		cache:cache,
 		callback:function(result,data,msg){
 			data = unescape(data);
-			_anyline_template_file[key] = data;
 			fn(result,data,msg);
 		}
 	});
@@ -134,6 +147,11 @@ function _ajax_success(config){
 			}
 		};
 	}
+
+	if(config['cache']){
+		var _request_key = _fn_pack_rquest_key(config.url, config.data);
+		_anyline_ajax_cache_data[_request_key] = data;
+	}
 	if(result){
 		//函数回调
 		var success = config.success;
@@ -166,3 +184,11 @@ function _ajax_error(XMLHttpRequest, textStatus, errorThrown){
 		console.log("状态:"+textStatus+"\n消息:"+XMLHttpRequest.responseText);
 //	}
 };
+
+function _fn_pack_rquest_key(url,param){
+	var result = url;
+	for(var i in param){
+		result += '[' + i + '=' + param[i] + ']';
+	}
+	return result;
+}
