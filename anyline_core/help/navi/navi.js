@@ -78,7 +78,7 @@ function _navi_go_ajax(n, conf){
 						$('#'+_navi_bodyContainer).html(_body);
 					}
 					if(_navi_pageContainer){
-						if(_navi_empty && data['TOTAL_ROW'] == 0){
+						if(_navi_empty != null && data['TOTAL_ROW'] == 0){
 							$('#'+_navi_pageContainer).html(_navi_empty);
 						}else{
 							$('#'+_navi_pageContainer).html(_navi);
