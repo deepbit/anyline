@@ -9,7 +9,6 @@ function _navi_jump(conf){
 }
 //分页标签onclick
 function _navi_go(n,conf) {
-	var frm = $(event.target).closest("form");
 	if(!n){
 		n = 1;
 	}
@@ -17,11 +16,16 @@ function _navi_go(n,conf) {
 		_navi_go_ajax(n,conf);
 		return;
 	}
-	if(frm.find('._anyline_navi_cur_page').val() == n){
-		return;
+	var frm = $(event.target).closest("form");
+	if(frm){
+		if(frm.find('._anyline_navi_cur_page').val() == n){
+			return;
+		}
+		frm.find('._anyline_navi_cur_page').val(n);
+		frm.submit();
+	}else{
+		console.log('分页异常');
 	}
-	frm.find('._anyline_navi_cur_page').val(n);
-	frm.submit();
 }
 //ajax分页
 function _navi_go_ajax(n, conf){
